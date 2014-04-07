@@ -1,0 +1,10 @@
+{
+    "name": "crimenes-angularjs",
+    "version": "0.0.0",
+    "description": "App to spot crimes in Puerto Rico",
+    "main": "server.js",
+    "author": "Roberto C. Rivera <rivera.roberto89@gmail.com>",
+    "dependencies": {
+        "express": "latest"
+    }
+}
