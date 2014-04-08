@@ -10,18 +10,22 @@
 		<div class="container">
 			
 		  <div ng-controller = "MapController">
-		  	{{hello}}
-		  	<leaflet defaults="defaults" center="center" height="480px" width="640px"></leaflet>
+		  	<br>
+		  	{{crimes}}
+		  	{{bounds}}
+		  	<leaflet defaults="defaults" center="center" bounds="bounds" markers="markers" height="600px" width="100%"></leaflet>
+
 		  </div>
 
 		</div>
 
-		<script type="text/javaScript" src="../lib/jquery/dist/jquery.min.js"></script> 
-		<script type="text/javaScript" src="../lib/angular/angular.min.js"></script>
-		<script type="text/javaScript" src="../lib/angular-leaflet/dist/angular-leaflet-directive.min.js"></script> 
-		<script type="text/javaScript" src="../lib/leaflet-dist/leaflet.js"></script>
-		<script type="text/javaScript" src="../js/main.js"></script> 
-		<script type="text/javaScript" src="../js/controllers/map_controller.js"></script> 
+		<script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script> 
+		<script type="text/javascript" src="../lib/angular/angular.min.js"></script>
+		<script type="text/javascript" src="../lib/angular-leaflet/dist/angular-leaflet-directive.min.js"></script> 
+		<script type="text/javascript" src="../lib/leaflet-dist/leaflet.js"></script>
+		<script type="text/javascript" src="../js/main.js"></script>
+		<script type="text/javascript" src="../js/services/get_crimes_service.js"></script>
+		<script type="text/javascript" src="../js/controllers/map_controller.js"></script> 
 
 	</body>
 </html>
