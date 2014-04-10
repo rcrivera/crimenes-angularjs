@@ -11,22 +11,7 @@ crimeSpotter.controller('MapController', ['$scope', 'crimesService', 'leafletBou
   angular.extend($scope, {
     center: {},
     bounds: bounds,
-    markers: {
-	    Madrid: {
-	        lat: 18.465719,
-	        lng: -66.117001,
-	        message: "This is Madrid. But you can drag me to another position",
-	        focus: true,
-	        draggable: true
-	    },
-	    Barcelona: {
-	        lat: 18.465719,
-	        lng: -66.1171,
-	        message: "This is Barcelona. You can't drag me",
-	        focus: false,
-	        draggable: false
-	    }
-    },
+    markers: {},
     defaults: {
       tileLayer: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
       maxZoom: 18
@@ -44,24 +29,21 @@ crimeSpotter.controller('MapController', ['$scope', 'crimesService', 'leafletBou
   		var southWest = '['+[$scope.bounds['southWest']['lng']+','+$scope.bounds['southWest']['lat']]+']';
   		var southEast = '['+[$scope.bounds['northEast']['lng']+','+$scope.bounds['southWest']['lat']]+']';
   		var polygon = '['+northEast+','+northWest+','+southWest+','+southEast+']';
-  		var request = 'http://crimenes-api.herokuapp.com/crimes?polygon='+polygon+'&from_date=2013-03-01&to_date=2014-12-22';
+  		var request = 'http://crimenes-api.herokuapp.com/crimes?polygon='+polygon+'&from_date=2013-01-01&to_date=2014-12-22';
 
   		crimesService.fetch_crimes(request, function(results) {
-  			markers = {};
+        $scope.markers = {};  
     		results.forEach(function(entry) {
-				  var marker = {
-				  	lat: entry['geometry']['coordinates'][1],
-		        lng: entry['geometry']['coordinates'][0],
-		        focus: true,
-		        message: entry['property']['delito_id'],
-				  };
-				  //console.log(entry['_id']['$oid']);
-				  $scope.markers[entry['_id']['$oid']] = marker;
+          marker = {
+              lat: entry['geometry']['coordinates'][1],
+              lng: entry['geometry']['coordinates'][0],
+              message: entry['property']['delito_id'],
+              draggable: false
+          }
+
+          $scope.markers[entry['_id']['$oid']] = marker;
+
 				});
-    		
-    		//$scope.crimes = results;
-
-
 			});
   	}
 
