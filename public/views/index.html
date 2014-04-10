@@ -13,7 +13,12 @@
 		  	<br>
 		  	
 		  	{{bounds}}
-		  	<leaflet defaults="defaults" center="center" bounds="bounds" geojson="geojson" height="600px" width="100%"></leaflet>
+
+
+				<input type="text" ng-autocomplete ng-model="geocomplete" options="options" details="details" size='90'/>
+				<button ng-click="geocode(geocomplete)">Find</button>
+
+		  <leaflet defaults="defaults" center="center" bounds="bounds" geojson="geojson" height="600px" width="100%"></leaflet>
 
 		  </div>
 
@@ -25,7 +30,10 @@
 		<script type="text/javascript" src="../lib/leaflet-dist/leaflet.js"></script>
 		<script type="text/javascript" src="../js/main.js"></script>
 		<script type="text/javascript" src="../js/services/get_crimes_service.js"></script>
-		<script type="text/javascript" src="../js/controllers/map_controller.js"></script> 
+		<script type="text/javascript" src="../js/services/get_coordinates_service.js"></script>
+		<script type="text/javascript" src="../js/controllers/map_controller.js"></script>
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+		<script type="text/javascript" src="../lib/ngAutocomplete/src/ngAutocomplete.js"></script>
 
 	</body>
 </html>

@@ -1,4 +1,4 @@
-var crimeSpotter = angular.module('crime-spotter', ['leaflet-directive']);
+var crimeSpotter = angular.module('crime-spotter', ['leaflet-directive','ngAutocomplete']);
 
 crimeSpotter.config([
   "$httpProvider", function(provider) {
