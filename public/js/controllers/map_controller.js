@@ -30,20 +30,19 @@ crimeSpotter.controller('MapController', ['$scope', 'crimesService', 'leafletBou
   		var southEast = '['+[$scope.bounds['northEast']['lng']+','+$scope.bounds['southWest']['lat']]+']';
   		var polygon = '['+northEast+','+northWest+','+southWest+','+southEast+']';
   		var request = 'http://crimenes-api.herokuapp.com/crimes?polygon='+polygon+'&from_date=2013-01-01&to_date=2014-12-22';
-
+      
   		crimesService.fetch_crimes(request, function(results) {
-        $scope.markers = {};  
-    		results.forEach(function(entry) {
-          marker = {
-              lat: entry['geometry']['coordinates'][1],
-              lng: entry['geometry']['coordinates'][0],
-              message: entry['property']['delito_id'],
-              draggable: false
-          }
-
-          $scope.markers[entry['_id']['$oid']] = marker;
-
-				});
+        $scope.geojson= {
+                data: results,
+                style: {
+                    fillColor: "green",
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                }
+            }
 			});
   	}
 
