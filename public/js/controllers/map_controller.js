@@ -12,11 +12,61 @@ crimeSpotter.controller('MapController', ['$scope', 'crimesService', 'coordinate
     center: {},
     bounds: bounds,
     markers: {},
+    layers: {
+      baselayers: {
+        osm: {
+          name: 'OpenStreetMap',
+          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          type: 'xyz'
+        },
+        cloudmade2: {
+          name: 'Cloudmade Tourist',
+          type: 'xyz',
+          url: 'http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',
+          layerParams: {
+            key: '007b9471b4c74da4a6ec7ff43552b16f',
+            styleId: 7
+          }
+        }
+      },
+      overlays: {
+        hillshade: {
+            name: 'Hillshade Europa',
+            type: 'wms',
+            url: 'http://129.206.228.72/cached/hillshade',
+            visible: true,
+            layerOptions: {
+                layers: 'europe_wms:hs_srtm_europa',
+                format: 'image/png',
+                opacity: 0.25,
+                attribution: 'Hillshade layer by GIScience http://www.osm-wms.de',
+                crs: L.CRS.EPSG900913
+            }
+        },
+        fire: {
+            name: 'OpenFireMap',
+            type: 'xyz',
+            url: 'http://openfiremap.org/hytiles/{z}/{x}/{y}.png',
+            layerOptions: {
+                attribution: '© OpenFireMap contributors - © OpenStreetMap contributors',
+                continuousWorld: true
+            }
+        }
+    }
+
+    },
     defaults: {
-      tileLayer: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
-      maxZoom: 18
+      maxZoom: 18,
+      scrollWheelZoom: false
   	}
 	});
+
+  /*
+  $scope.$watch("center.zoom", function(zoom) {
+    $scope.tiles.url = (zoom > 14) ? "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            : "http://{s}.tile.cloudmade.com/ad132e106cd246ec961bbdfbe0228fe8/997/256/{z}/{x}/{y}.png";
+  });
+*/
 
   $scope.$watch("bounds", function() {
   	if (first_load) {

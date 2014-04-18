@@ -4,36 +4,62 @@
 	  <title>Crime Map Puerto Rico</title>
 	  <link rel="stylesheet" type="text/css" href="../css/main.css">
 	  <link rel="stylesheet" type="text/css" href="../lib/leaflet-dist/leaflet.css">
-	</head>
+	  <link rel="stylesheet" type="text/css" href="../lib/bootstrap/dist/css/bootstrap.min.css">
 	<body>
+		<div ng-controller = "MapController">
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			  <div class="container-fluid">
+			    <!-- Brand and toggle get grouped for better mobile display -->
+			    <div class="navbar-header">
+			      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <a class="navbar-brand" href="#">Crime Spotter</a>
+			    </div>
 
-		<div class="container">
-			
-		  <div ng-controller = "MapController">
-		  	<br>
-		  	
+			    <!-- Collect the nav links, forms, and other content for toggling -->
+			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			      <form class="navbar-form navbar-left" role="search">
+			        <div class="form-group">
+			          <input type="text" ng-autocomplete ng-model="geocomplete" options="options" details="details" class="form-control" placeholder="Enter location" size='70'/>
+			        </div>
+			        <button ng-click="geocode(geocomplete)" type="submit" class="btn btn-default">Find</button>
+			      </form>
+			      <ul id="top-menu" class="nav navbar-nav navbar-right">
+			        <li><a href="#leaf-geojson">leaf-geojson</a></li>
+			        <li><a href="#leaf-bounds">leaf-bounds</a></li>
+			        <li><a href="#leaf-map">leaf-map</a></li>
+			      </ul>
+			    </div><!-- /.navbar-collapse -->
+			  </div><!-- /.container-fluid -->
+			</nav>
+			<div class="container">
+		  	<a id="leaf-bounds">Bounds</a>
 		  	{{bounds}}
 
+				<a id="leaf-map">Map</a>
+			  <leaflet defaults="defaults" center="center" bounds="bounds" geojson="geojson" layers="layers" height="600px" width="100%"></leaflet>
+		  	<a id="leaf-geojson">Geojson Results</a>
+		  	{{geojson}}
 
-				<input type="text" ng-autocomplete ng-model="geocomplete" options="options" details="details" size='90'/>
-				<button ng-click="geocode(geocomplete)">Find</button>
-
-		  <leaflet defaults="defaults" center="center" bounds="bounds" geojson="geojson" height="600px" width="100%"></leaflet>
-
-		  </div>
-
-		</div>
+			</div> <!-- container -->
+		</div><!-- MapController -->
 
 		<script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script> 
 		<script type="text/javascript" src="../lib/angular/angular.min.js"></script>
 		<script type="text/javascript" src="../lib/angular-leaflet/dist/angular-leaflet-directive.min.js"></script> 
 		<script type="text/javascript" src="../lib/leaflet-dist/leaflet.js"></script>
 		<script type="text/javascript" src="../js/main.js"></script>
+		<script type="text/javascript" src="../js/scrollspy.js"></script>
 		<script type="text/javascript" src="../js/services/get_crimes_service.js"></script>
 		<script type="text/javascript" src="../js/services/get_coordinates_service.js"></script>
 		<script type="text/javascript" src="../js/controllers/map_controller.js"></script>
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 		<script type="text/javascript" src="../lib/ngAutocomplete/src/ngAutocomplete.js"></script>
+		<script type="text/javascript" src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	</body>
 </html>
