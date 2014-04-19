@@ -110,7 +110,7 @@ crimeSpotter.controller('MapController', ['$scope', 'crimesService', 'coordinate
   };
 
 
- $scope.options = {
+ $scope.autocomplete_options = {
     country: 'pr',
     types: '(regions)',
     watchEnter: true

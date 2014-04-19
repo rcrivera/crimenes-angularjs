@@ -1,4 +1,5 @@
 $(function() {
+//Start Scrollspy
   // Cache selectors
   var lastId,
       topMenu = $("#top-menu"),
@@ -44,4 +45,20 @@ $(function() {
          //  .end().filter("[href=#"+id+"]").parent().addClass("active");
      }                   
   });
+//End Scrollspy
+
+//Start datepicker
+  $('#datetimepicker8').datetimepicker({
+    pickTime: false
+  });
+  $('#datetimepicker9').datetimepicker({
+    pickTime: false
+  });
+  $("#datetimepicker8").on("dp.change",function (e) {
+     $('#datetimepicker9').data("DateTimePicker").setMinDate(e.date);
+  });
+  $("#datetimepicker9").on("dp.change",function (e) {
+     $('#datetimepicker8').data("DateTimePicker").setMaxDate(e.date);
+  });
+//End datepicker
 });
