@@ -1,16 +1,33 @@
-crimeSpotter.controller('MapController', ['$scope', 'crimesService', 'coordinatesService','leafletBoundsHelpers',function($scope, crimesService, coordinatesService, leafletBoundsHelpers) {
+crimeSpotter.controller('MapController', ['$scope', 'crimesService', 'generalSetupService', 'coordinatesService','leafletBoundsHelpers',function($scope, crimesService, generalSetupService, coordinatesService, leafletBoundsHelpers) {
+
+  generalSetupService.initialize()
+
+  $scope.start_date = '2013/01/01'
+
+  $scope.end_date = moment().format('YYYY/MM/DD')
+
+  //Default location
+  $scope.geocomplete = 'San Juan, Puerto Rico'
+
+    //This function look for coordinates given an address
+  $scope.geocode = function(address) {
+    coordinatesService.get_coordinates(address,function(result){
+      $scope.center = {
+            lat: result['results'][0]['locations'][0]['latLng']['lat'],
+            lng: result['results'][0]['locations'][0]['latLng']['lng'],
+            zoom: 16
+        };
+    });
+  };
+
+  $scope.geocode($scope.geocomplete)
 
 	//This variable is to ignore the first load of the map bounds
 	var first_load = true;
 
-	var bounds = leafletBoundsHelpers.createBoundsFromArray([
-        [ 18.465719, -66.117001 ],
-        [ 18.465719, -66.117001 ]
-    ]);
-
   angular.extend($scope, {
     center: {},
-    bounds: bounds,
+    bounds: [],
     markers: {},
     layers: {
       baselayers: {
@@ -79,8 +96,12 @@ crimeSpotter.controller('MapController', ['$scope', 'crimesService', 'coordinate
   		var southWest = '['+[$scope.bounds['southWest']['lng']+','+$scope.bounds['southWest']['lat']]+']';
   		var southEast = '['+[$scope.bounds['northEast']['lng']+','+$scope.bounds['southWest']['lat']]+']';
   		var polygon = '['+northEast+','+northWest+','+southWest+','+southEast+']';
-  		var request = 'http://crimenes-api.herokuapp.com/crimes?polygon='+polygon+'&from_date=2013-01-01&to_date=2014-12-22';
+      var from_date = $scope.start_date.replace(/\//g,'-')
+      var to_date = $scope.end_date.replace(/\//g,'-')
 
+  		var request = 'http://crimenes-api.herokuapp.com/crimes?polygon='+polygon+'&from_date='+from_date+'&to_date='+to_date;
+      
+      
   		crimesService.fetch_crimes(request, function(results) {
         $scope.geojson= {
                 data: results,
@@ -94,22 +115,11 @@ crimeSpotter.controller('MapController', ['$scope', 'crimesService', 'coordinate
                 }
             }
 			});
+      
   	}
 
   });
   
-  //This function look for coordinates given an address
-  $scope.geocode = function(address) {
-    coordinatesService.get_coordinates(address,function(result){
-      $scope.center = {
-            lat: result['results'][0]['locations'][0]['latLng']['lat'],
-            lng: result['results'][0]['locations'][0]['latLng']['lng'],
-            zoom: 14
-        };
-    });
-  };
-
-
  $scope.autocomplete_options = {
     country: 'pr',
     types: '(regions)',
